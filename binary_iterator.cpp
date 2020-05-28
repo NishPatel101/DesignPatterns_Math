@@ -1,4 +1,3 @@
-
 #include "iterator.hpp"
 
 BinaryIterator::BinaryIterator(Base* ptr) : Iterator(ptr) {
@@ -8,6 +7,7 @@ BinaryIterator::BinaryIterator(Base* ptr) : Iterator(ptr) {
 void BinaryIterator::first() {
     this->c = left;
 }
+
 void BinaryIterator::next() {
     if(this->c == left) {
         this->c = right;
@@ -19,12 +19,14 @@ void BinaryIterator::next() {
         this->c = end;
     }
 }
+
 bool BinaryIterator::is_done() {
     if(this->c == end) {
         return true;
     }
     return false;
 }
+
 Base* BinaryIterator::current() {
     if(this->c == left) {
         return this->self_ptr->get_left();
@@ -34,3 +36,4 @@ Base* BinaryIterator::current() {
     }
     return nullptr;
 }
+

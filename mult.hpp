@@ -1,31 +1,22 @@
-#ifndef _MULT_HPP_
-#define _MULT_HPP_
+#ifndef __MULT_HPP__
+#define __MULT_HPP__
 
-#include "base.hpp"
-#include "op.hpp"
-#include "iterator.hpp"
-#include "visitor.hpp"
-
-class Mult : public Base {
-        private:
-                Base* value1;
-                Base* value2;
-
-        public:
-                Mult(Base* value1, Base* value2) : Base() {
-                        this->value1 = value1;
-                        this->value2 = value2;
-                }
-
-                virtual double evaluate() { return (value1->evaluate() * value2->evaluate()) ; }
-                virtual std::string stringify() { return " " + std::to_string(value1->evaluate()) + " * " +  std::to_string(value2->evaluate()) + " "; }
-                virtual Iterator* create_iterator() {
-                        Iterator* it = new BinaryIterator(this);
-                }
-		void accept(CountVisitor* c) {
-                        c->visit_mult();
-                }
-
+class Mult: public Base{
+	private:
+		Base* value1;
+		Base*  value2;
+	public:
+		Mult(Base* a, Base* b) {value1 = a; value2 = b;}
+		virtual double evaluate(){return value1->evaluate() * value2->evaluate();}
+		virtual std::string stringify() {return value1->stringify() + " * " + value2->stringify();}
+		virtual Iterator* create_iterator()
+		{
+			return new BinaryIterator(this);
+		}
+		virtual Base* get_left(){return value1;};
+		virtual Base* get_right(){return value2;};
+		virtual void accept(CountVisitor* visitor){visitor->visit_mult();}
 };
 
-#endif // _MULT_HPP_
+#endif //__MULT_HPP__
+

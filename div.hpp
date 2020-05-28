@@ -1,28 +1,33 @@
-#ifndef _DIV_HPP_
-#define _DIV_HPP_
+#ifndef __DIV_HPP__
+#define __DIV_HPP__
 
-#include "base.hpp"
-#include "op.hpp"
-#include "iterator.hpp"
+class Div: public Base{
+	private:
+		Base* value1;
+		Base* value2;
+	public:
+		Div(Base* x, Base* y){value1 = x;value2 = y;}
+		virtual double evaluate() {
+			if(value2 != 0){
+				return value1->evaluate() / value2->evaluate();
+			}
+			else{
+				return -0;
+			}
+		}
+		virtual std::string stringify() {
+			return  value1->stringify() + " / " + value2->stringify();
+		}
+		
+		virtual Iterator* create_iterator()
+		{			
+			return new BinaryIterator(this);
+		}
 
-class Div : public Base {
-        private:
-                Base* value1;
-                Base* value2;
-
-        public:
-                Div(Base* value1, Base* value2) : Base() {
-                        this->value1 = value1;
-                        this->value2 = value2;
-                }
-
-                virtual double evaluate() { return (value1->evaluate() / value2->evaluate()) ; }
-                virtual std::string stringify() { return " " + std::to_string(value1->evaluate()) + " / " +  std::to_string(value2->evaluate()) + " "; }
-                virtual Iterator* create_iterator() {
-                        Iterator* it = new BinaryIterator(this);
-                }
-
+		virtual Base* get_left(){return value1;};
+		virtual Base* get_right(){return value2;};
+		virtual void accept(CountVisitor* visitor){visitor->visit_div();}
 };
 
-#endif // _DIV_HPP_
+#endif //__DIV_HPP__
 
