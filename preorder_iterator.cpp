@@ -16,6 +16,7 @@ void PreorderIterator::first() {
         this->iterators.push(root_itr);
     }
 }
+
 void PreorderIterator::next() {
     // The notes say to create an iterator for the item on the top of the stack, but the stack is
     // an iterator so it should probably say create an item for the current of the iterator on the
@@ -30,12 +31,15 @@ void PreorderIterator::next() {
         }
     }
 }
+
 bool PreorderIterator::is_done() {
     return this->iterators.empty();
 }
+
 Base* PreorderIterator::current() {
     if(!this->iterators.empty()) {
         return this->iterators.top()->current();
     }
     return nullptr;
 }
+
